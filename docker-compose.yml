@@ -1,0 +1,35 @@
+services:
+  app:
+    restart: on-failure
+    container_name: cms-api-container
+    build: .
+    env_file:
+      - config/config.env
+    volumes:
+      - ./:/app
+    ports:
+      - 5000:5000
+    environment:
+      PORT: 5000
+      NODE_ENV: dev
+      APP_URL: http://localhost:3000
+      JWT_RESET_KEY: 1d7831c4-2f29-4f6b-8bf2-c24b802e08d1
+      JWT_ACCESS_KEY: 35ed11bc-81c4-49a4-bd58-3f3367666151
+      JWT_REFRESH_KEY: cef949ee-c5fc-4d8b-998f-38bf7a8fe6c8
+      COOKIE_ACCESS_TOKEN: 57ecdf76-126c-4c72-8953-1d8fb7b6e0e6
+      COOKIE_REFRESH_TOKEN: 0cc2e102-33c9-41e0-9b02-473938f33154
+      SMTP_HOST: smtp.office365.com
+      SMTP_PORT: 587
+      SMTP_USER: Themba.Makamu@fasset.org.za
+      SMTP_PASSWORD: "@Kamzen1998"
+      FROM_NAME: Development Support
+      FROM_EMAIL: devsupport@fasset.org.za
+      TENDER_DOCUMENT_FOLDER: ./uploads/tenders
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: Kamzen1998
+      POSTGRES_USER: postgres
+      POSTGRES_DB: FMS_DB
